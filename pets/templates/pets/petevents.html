@@ -1,0 +1,15 @@
+{% extends 'pets/main.html' %} 
+
+{% block information %}
+<h1>PetEvents!!!</h1>
+<table>
+{% for event in events %}
+<tr><td>
+<a href="{% url 'pets:viewevent' event.id %}">{{ event.event_date }} - {{ event.get_event_type_display }}</a></td>
+<td>{{ event.event_comment }}</td>
+<td><a href="{% url 'pets:deleteevent' event.id %}">Удалить событие.</a></td>
+{% endfor %}
+</table>
+<a href="{% url 'pets:petdetail' petid %}">Назад к питомцу.</a><p>
+<a href="{% url 'pets:petlist' %}">Назад к списку питомцев</a>
+{% endblock %}

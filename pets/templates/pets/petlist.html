@@ -1,0 +1,13 @@
+{% extends 'pets/main.html' %} 
+
+{% block information %}
+<h1>Petlist!!!</h1>
+<ul>
+{% for pet in pets %}
+<li>
+<a href="{% url 'pets:petdetail' pet.id %}">{{pet.pet_name}}</a>
+</li>
+{% endfor %}
+</ul>
+<a href="{% url 'pets:newpet' %}">Добравить питомца</a>
+{% endblock %}

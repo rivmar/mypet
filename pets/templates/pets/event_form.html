@@ -1,0 +1,14 @@
+{% extends 'pets/main.html' %}
+
+{% block information %}
+<p>Создание/pедактирование события для питомца: {{ pet_name }}{{ object.pet }}<p>
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type='Submit'>Создать</button>
+</form>
+{% if object %}
+<a href="{% url 'pets:petdetail' object.pet.id %}">Вернуться к питомцу {{ object.pet }}</a><p>
+{% endif %}
+<a href="{% url 'pets:petlist' %}">Назад к списку питомцев</a>
+{% endblock %}

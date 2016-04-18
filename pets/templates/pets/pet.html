@@ -1,0 +1,17 @@
+{% extends 'pets/main.html' %} 
+
+{% block information %}
+<p>Hello there, {{ pet.u_name }}!</p>
+<h1>{{ pet.pet_name }}</h1><p>
+<u>{{ pet.get_gender_display }}</u><p>
+<b>{{ pet.species }}</b><p>
+<b>{{ pet.morph }}</b><p>
+<b>{{ pet.form_birth_date }}</b><p>
+<b>{{ pet.fed_freq }}</b><p>
+<b>{{ pet.pet_comment }}</b><p>
+<a href="{% url 'pets:changepet' pet.id %}">Редактировать</a><p>
+<a href="{% url 'pets:addevent' pet.id %}">Добавить событие</a><p>
+<a href="{% url 'pets:petevents' pet.id %}">Посмотреть прошлые события</a><p>
+<a href="{% url 'pets:petlist' %}">Назад к списку питомцев</a><p>
+
+{% endblock %}
