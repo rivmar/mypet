@@ -28,11 +28,13 @@ class PetForm(forms.ModelForm):
 			y = int(data.pop())
 			if y<1950: raise error
 			try:
-				m = int(data.pop())
+				mm = int(data.pop())
+				m = mm if mm!=0 else now.month
 			except IndexError:
 				m = now.month
 			try:
-				d = int(data.pop())
+				dd = int(data.pop())
+				d = dd if dd!=0 else now.day
 			except IndexError:
 				d = now.day
 			try:

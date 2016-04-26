@@ -8,10 +8,8 @@
 <b>{{ event.reminde_me }}</b><p>
 <b>{{ event.reminder_comment }}</b><p>
 <b>{{ event.pet.u_name }}</b><p>
-<a href="{% url 'pets:changeevent' event.id %}">Редактировать</a><p>
-<a href="{% url 'pets:deleteevent' event.id %}">Удалить</a><p>
-<a href="{% url 'pets:petdetail' event.pet.id %}">Назад к питомцу</a><p>
-<a href="{% url 'pets:petevents' event.pet.id %}">Назад к списку событий</a><p>
-<a href="{% url 'pets:petlist' %}">Назад к списку питомцев</a><p>
+<div class = 'bigbutton'><a href="{% url 'pets:changeevent' event.id %}">Редактировать</a></div>
+<div class = 'bigbutton'><a href="{% url 'pets:petdetail' event.pet.id %}">Назад к питомцу</a></div>
+<div class = 'bigbutton'><a href="{% url 'pets:petevents' event.pet.id %}">Назад к списку событий</a></div>
 
 {% endblock %}

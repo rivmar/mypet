@@ -1,0 +1,66 @@
+body {
+	font-size: 16pt;
+	font-family: Tahoma;
+}
+
+h1 {
+	font-size: 18pt;
+	text-decoration: none;
+}
+
+a {
+	text-decoration: none;
+	color: #2E8B57;
+}
+
+table {
+	font-size: 16pt;
+
+}
+
+.today {
+	background:  #54FF9F ;
+}
+
+.bigbutton {
+	width: 150px;
+	height: 80px;
+	background:  #54FF9F ;
+	display: table;
+	padding: 5px;
+	margin: 5px;
+	float: left;
+}
+
+.bigbutton a {
+	color: #FFFFFF;
+	display: table-cell;
+	font-size: 16pt;
+	font-family: Tahoma;
+	font-style: normal;
+	font-stretch: condensed;
+	font-variant: small-caps;
+	text-decoration: none;
+	vertical-align: middle;
+}
+
+.smallbutton {
+	width: 150px;
+	height: 30px;
+	background:  #54FF9F ;
+	display: table;
+	padding: 5px;
+	margin: 5px;
+}
+
+.smallbutton a {
+	color: #FFFFFF;
+	display: table-cell;
+	font-size: 12pt;
+	font-family: Tahoma;
+	font-style: normal;
+	font-stretch: condensed;
+	font-variant: small-caps;
+	text-decoration: none;
+	vertical-align: middle;
+}

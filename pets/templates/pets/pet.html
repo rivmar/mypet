@@ -2,16 +2,21 @@
 
 {% block information %}
 <p>Hello there, {{ pet.u_name }}!</p>
-<h1>{{ pet.pet_name }}</h1><p>
-<u>{{ pet.get_gender_display }}</u><p>
-<b>{{ pet.species }}</b><p>
-<b>{{ pet.morph }}</b><p>
-<b>{{ pet.form_birth_date }}</b><p>
-<b>{{ pet.fed_freq }}</b><p>
-<b>{{ pet.pet_comment }}</b><p>
-<a href="{% url 'pets:changepet' pet.id %}">Редактировать</a><p>
-<a href="{% url 'pets:addevent' pet.id %}">Добавить событие</a><p>
-<a href="{% url 'pets:petevents' pet.id %}">Посмотреть прошлые события</a><p>
-<a href="{% url 'pets:petlist' %}">Назад к списку питомцев</a><p>
+<h1>Вы смотрите карточку питомца: {{ pet.pet_name }}</h1><p>
+Пол: {{ pet.get_gender_display }}<p>
+Вид: {{ pet.species }}<p>
+Морфа: {{ pet.morph|default:"не указана" }}
+<p>
+Дата рождения: {{ pet.temp_birth_date|default:"неизвестна" }}<p>
+Рекомендуемая частота кормления: {% if pet.fed_freq %}
+раз в {{ pet.fed_freq }} дней
+{% else %}
+не указана
+{% endif %}
+<p>
+{{ pet.pet_comment }}<p>
 
+<div class = 'bigbutton'><a href="{% url 'pets:changepet' pet.id %}">Редактировать</a></div>
+<div class = 'bigbutton'><a href="{% url 'pets:addevent' pet.id %}">Добавить событие</a></div><p>
+<div class = 'bigbutton'><a href="{% url 'pets:petevents' pet.id %}">Посмотреть прошлые события</a></div><p>
 {% endblock %}

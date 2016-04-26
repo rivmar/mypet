@@ -1,7 +1,12 @@
-<html><head><title>Main page!!!</title></head>
+{% load staticfiles %}
+<html><head>
+<title>Main page!!!</title>
+<link rel='stylesheet' type='text/css' href = '{% static 'pets/styles.css' %}'
+</head>
 <body>
 	Main template!
 {% block login %}{% endblock %}
 {% block information %}{% endblock %}
+<div class = 'bigbutton'><a href="{% url 'pets:petlist' %}">К списку питомцев</a></div>
 </body>
 </html>

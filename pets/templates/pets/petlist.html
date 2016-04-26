@@ -2,6 +2,9 @@
 
 {% block information %}
 <h1>Petlist!!!</h1>
+{% if not pets %}
+Вы не добавили ни одного питомца.
+{% endif %}
 <ul>
 {% for pet in pets %}
 <li>
@@ -9,5 +12,5 @@
 </li>
 {% endfor %}
 </ul>
-<a href="{% url 'pets:newpet' %}">Добравить питомца</a>
+<div class = 'bigbutton'><a href="{% url 'pets:newpet' %}">Добавить питомца</a></div>
 {% endblock %}

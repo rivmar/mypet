@@ -125,6 +125,11 @@ class EventAdd(generic.edit.CreateView):
 	model = Events
 	template_name = 'pets/event_form.html'
 
+	def get_initial(self):
+		initial = super(EventAdd, self).get_initial()
+		initial['event_date'] = datetime.date.today()
+		return initial
+
 	def get_context_data(self, **kwargs):
 		context = super(EventAdd, self).get_context_data(**kwargs)
 		pet = Pets.objects.get(id = self.kwargs['pk'])
@@ -182,7 +187,7 @@ class EventDelete(generic.edit.DeleteView):
 	def get_success_url(self):
 		eventid = self.kwargs['pk']
 		pet = Events.objects.get(pk = eventid).pet
-		return '%s/calendar' % pet.get_absolute_url()
+		return '%s/petevents' % pet.get_absolute_url()
 
 	@method_decorator(login_required())
 	def dispatch(self, request, *args, **kwargs):
@@ -253,6 +258,7 @@ class PetEventsView(generic.ListView):
 	def get_context_data(self, **kwargs):
 		context = super(PetEventsView, self).get_context_data(**kwargs)
 		context['petid'] = self.kwargs['pk']
+		context['petname'] = Pets.objects.get(id=self.kwargs['pk'])
 		return context
 
 	def get_queryset(self):

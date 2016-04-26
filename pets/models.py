@@ -47,10 +47,44 @@ class Pets(models.Model):
 		return  '/%i' % self.id
 
 	def form_birth_date(self):
-		date_ar = [str(i)  for i in (self.birth_date, self.birth_month, self.birth_year) if i]
-		return '.'.join(date_ar)
+		date_ar = []
+		for i in (self.birth_date, self.birth_month, self.birth_year):
+			if i:
+				date_ar.append(i)
+			else:
+				date_ar.append(0)
+		#return '.'.join(date_ar)
+		return '{:02}.{:02}.{:04}'.format(*date_ar)
 
-	'''def calculate_age:
+	def temp_birth_date(self):
+		RU_MONTH_VALUES = {
+    1:'январь',
+    2:'февраль',
+    3:'март',
+    4:'апрель',
+    5:'май',
+    6:'июнь',
+    7:'июль',
+    8:'август',
+    9:'сентябрь',
+    10:'октябрь',
+    11:'ноябрь',
+    12:'декабрь'}
+
+		date_ar = []
+		if self.birth_date and self.birth_month and self.birth_year:
+			return datetime.date(self.birth_year, self.birth_month, self.birth_date)
+		elif self.birth_month and self.birth_year:
+			return '%s %d г.' % (RU_MONTH_VALUES[datetime.date(self.birth_year, self.birth_month, 1).month], datetime.date(self.birth_year, self.birth_month, 1).year)
+		elif self.birth_year:
+			return '%d г.' % datetime.date(self.birth_year, 1, 1).year
+		else:
+			return None
+
+
+
+	'''
+	def calculate_age:
 		if not species.birth_year: return 'Неизвестно'
 		day = int(self.birth_date) if self.birth_date else 15
 		month = int(self.birth_month) if self.birth_month else 6
