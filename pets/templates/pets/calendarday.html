@@ -1,13 +1,13 @@
 {% extends 'pets/main.html' %} 
 
 {% block information %}
-<h1>One day!!!</h1>
-<ul>
+<h1>One day!!!{{data}}</h1>
+<table>
 {% for event in events %}
-<li>
-<a href="{% url 'pets:viewevent' event.id %}">{{event.pet}} {{ event.get_event_type_display }}</a> <a href="{% url 'pets:deleteevent' event.id %}">Удалить событие.</a>
-</li>
+<tr>
+<td><a href="{% url 'pets:viewevent' event.id %}">{{event.pet}} {{ event.get_event_type_display }}</a></td>
+<td><div class = 'smallbutton'><a href="{% url 'pets:deleteevent' event.id %}">Удалить событие.</a></td>
+</tr>
 {% endfor %}
-</ul>
-<a href="{% url 'pets:calendar' %}">Назад в календарь.</a>
+</table>
 {% endblock %}

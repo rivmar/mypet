@@ -4,7 +4,7 @@
 <p><div class = 'smallbutton'><a href="{% url 'pets:newspecies' %}">Новый вид</a></div> Добавить вид, которого нет в выпадающем списке. Введенные данные будут утеряны!
 <form action="" method="post">
     {% csrf_token %}
-    {{ form.as_table }}
+    {{ form.as_p }}
     <button type='Submit'>Создать</button>
 </form>
 {% if object %}

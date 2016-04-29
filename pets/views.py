@@ -193,36 +193,54 @@ class EventDelete(generic.edit.DeleteView):
 	def dispatch(self, request, *args, **kwargs):
 		return super(EventDelete, self).dispatch(request, *args, **kwargs)
 
-'''class Calendar(generic.ListView):
-
-	def get(self, *args, **kwargs):
-		self.date = datetime.date.today()
-		cal = HTMLCalendar(0)
-		response = HttpResponse(cal.formatyear(self.date.year))
-		return response '''
-
 class EventsCalendar(HTMLCalendar):
-
+    '''
+    http://uggedal.com/journal/creating-a-flexible-monthly-calendar-in-django/
+    '''
     def __init__(self, events):
         super(EventsCalendar, self).__init__()
         self.events = self.group_by_day(events)
 
     def formatday(self, day, weekday):
+
+        green = '<img src="/static/images/g.png" />'
+        yellow = '<img src="/static/images/y.png" />'
+        orange = '<img src="/static/images/o.png" />'
+        red = '<img src="/static/images/r.png" />'
+        sred = '<img src="/static/images/sr.png" />'
+        pink  = '<img src="/static/images/p.png" />' 
+        viol = '<img src="/static/images/v.png" />'
+        black = '<img src="/static/images/bl.png" />'
+        grey = '<img src="/static/images/gr.png" />'
+            	
         if day != 0:
-            cssclass = self.cssclasses[weekday]
-            if datetime.date.today() == datetime.date(self.year, self.month, day):
-                cssclass += ' today'
-            if day in self.events:
-                cssclass += ' filled'
-                body = ['<ul>']
-                for event in self.events[day]:
-                    body.append('<li>')
-                    body.append('<a href="%s">' % event.get_absolute_url())
-                    body.append(esc(event.event_type))
-                    body.append('</a></li>')
-                body.append('</ul>')
-                return self.day_cell(cssclass, '%d %s' % (day, ''.join(body)))
-            return self.day_cell(cssclass, day)
+        	cssclass = self.cssclasses[weekday]
+        	if datetime.date.today() == datetime.date(self.year, self.month, day):
+        		cssclass += ' today'
+        	if day in self.events:
+        		ev_types = set()
+        		cssclass += ' filled'
+        		for event in self.events[day]:
+        			if event.event_type == 'F':
+        				ev_types.add(green)
+        			elif event.event_type == 'S':
+        				ev_types.add(yellow)
+        			elif event.event_type == 'FF' or event.event_type == 'RF' or event.event_type == 'SB':
+        				ev_types.add(orange)
+        			elif event.event_type == 'R' or event.event_type == 'HP':
+        				ev_types.add(red)
+        			elif event.event_type == 'HC':
+        				ev_types.add(sred)
+        			elif event.event_type == 'B':
+        				ev_types.add(pink)
+        			elif event.event_type == 'C' or event.event_type == 'L':
+        				ev_types.add(viol)
+        			elif event.event_type == 'D':
+        				ev_types.add(black)	
+        			else:
+        				ev_types.add(grey)
+        		return self.day_cell(cssclass, '<a href = "/%d/%02.d/%02.d">%d  %s</a>'% (self.year, self.month, day, day, ''.join(ev_types)))
+        	return self.day_cell(cssclass, day)
         return self.day_cell('noday', '&nbsp;')
 
     def formatmonth(self, year, month):
@@ -237,7 +255,6 @@ class EventsCalendar(HTMLCalendar):
 
     def day_cell(self, cssclass, body):
         return '<td class="%s">%s</td>' % (cssclass, body)
-
 
 def calendar(request, year=datetime.date.today().year, month=datetime.date.today().month):
   my_events = Events.objects.order_by('event_date').filter(
@@ -272,12 +289,12 @@ class CalendarDay(generic.ListView):
 
 	@method_decorator(login_required())
 	def dispatch(self, request, *args, **kwargs):
-		return super(PetsList, self).dispatch(request, *args, **kwargs)
+		return super(CalendarDay, self).dispatch(request, *args, **kwargs)
 
 	def get_queryset(self):
-		day, month, year = map(int, self.kwargs['day'], self.kwargs['month'], self.kwargs['year'])
+		day, month, year = map(int, (self.kwargs['day'], self.kwargs['month'], self.kwargs['year']))
 		data = datetime.date(year, month, day)
-		events = Events.objects.filter(pet__u_name = self.request.user, event_date = date)
+		events = Events.objects.filter(pet__u_name = self.request.user, event_date = data)
 		return events
 
 class AddSpecies(generic.edit.CreateView):

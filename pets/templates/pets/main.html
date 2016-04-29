@@ -4,7 +4,7 @@
 <link rel='stylesheet' type='text/css' href = '{% static 'pets/styles.css' %}'
 </head>
 <body>
-	Main template!
+<a href="{% url 'pets:calendar' %}">Main template!</a>
 {% block login %}{% endblock %}
 {% block information %}{% endblock %}
 <div class = 'bigbutton'><a href="{% url 'pets:petlist' %}">К списку питомцев</a></div>

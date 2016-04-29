@@ -11,6 +11,7 @@ urlpatterns = [
 			url(r'^(?P<pk>[0-9]+)/petevents/$', views.PetEventsView.as_view(), name='petevents'),
 			url(r'^$', views.calendar, name='calendar'),
 			url(r'^(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/$', views.calendar, name='calendar'),
+			url(r'^(?P<year>[0-9]{4})/(?P<month>[0-9]{2})/(?P<day>[0-9]{2})/$', views.CalendarDay.as_view(), name='day'),
 			url(r'^newpet/$', views.PetAdd.as_view(), name='newpet'),
 			url(r'^petlist/$',views.PetsList.as_view(), name='petlist'),
 			url(r'^newspecies/$',views.AddSpecies.as_view(),  name='newspecies')

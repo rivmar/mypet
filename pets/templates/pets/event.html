@@ -1,12 +1,12 @@
 {% extends 'pets/main.html' %} 
 
 {% block information %}
-<h1>{{ event.pet }}</h1><p>
-<u>{{ event.get_event_type_display }}</u><p>
-<b>{{ event.event_date }}</b><p>
-<b>{{ event.event_comment }}</b><p>
-<b>{{ event.reminde_me }}</b><p>
-<b>{{ event.reminder_comment }}</b><p>
+<h1>Питомец: {{ event.pet }}</h1><p>
+Событие: {{ event.get_event_type_display }}<p>
+Дата: {{ event.event_date }}<p>
+Комментарий: {{ event.event_comment|default:'не добавлен.' }}<p>
+Напомнить: {{ event.reminde_me|default:'не указано.' }}<p>
+Комментарий к напоминанию: {{ event.reminder_comment|default:'не добавлен.' }}<p>
 <b>{{ event.pet.u_name }}</b><p>
 <div class = 'bigbutton'><a href="{% url 'pets:changeevent' event.id %}">Редактировать</a></div>
 <div class = 'bigbutton'><a href="{% url 'pets:petdetail' event.pet.id %}">Назад к питомцу</a></div>

@@ -1,9 +1,20 @@
 {% extends 'pets/main.html' %} 
-
+{% load static %}
 {% block information %}
-
 <div id="calendar">
     {{ calendar }}
 </div>
-
+<div id="legend">
+Обозначения:<p>
+<img src="{% static 'images/g.png' %}" /> - кормление<br>
+<img src="{% static 'images/y.png' %}" /> - линька<br>
+<img src="{% static 'images/o.png' %}" /> - отказ от корма, принудительное кормление, проблемная линька<br>
+<img src="{% static 'images/r.png' %}" /> - срыг, проблемы со здоровьем<br>
+<img src="{% static 'images/sr.png' %}" /> - ветеринарные процедуры<br>
+<img src="{% static 'images/p.png' %}" /> - зимовка<br>
+<img src="{% static 'images/v.png' %}" /> - спаривание, роды, откладка яиц<br>
+<img src="{% static 'images/bl.png' %}" /> - смерть<br>
+<img src="{% static 'images/gr.png' %}" /> - другое<br>
+</div>
+<div style="clear:both;"></div>
 {% endblock %}

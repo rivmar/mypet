@@ -13,13 +13,68 @@ a {
 	color: #2E8B57;
 }
 
-table {
-	font-size: 16pt;
-
-}
 
 .today {
 	background:  #54FF9F ;
+}
+
+#calendar td.filled {
+	border-width: 3px;
+}
+
+#calendar td.filled a {
+	display: block;
+	width: 120px;
+	height: 60px;
+	margin-top: 40px;
+}
+
+#calendar table {
+	border-collapse: collapse;
+	float: left;
+	width: 840px;
+	margin-right: 20px;
+}
+
+#legend {
+}
+
+#calendar td {
+	height: 100px;
+	width: 120px;
+	border-color: #4682B4;
+	border-width: 1px;
+	border-style: solid;
+	border-radius: 5px;
+}
+
+#calendar .noday {
+	border-style: none;
+}
+
+#calendar  th {
+	background: #4682B4;
+	color: #B0C4DE;
+	font-weight: normal;
+	height: 40;
+	border-radius: 5px;
+}
+
+#calendar th.month  {
+	background: #36648B;
+}
+
+
+.sat, .sun {
+	background:  #B0C4DE
+}
+
+.mon, .wed, .fri {
+	background: #F0F8FF
+}
+
+.thu, .tue{
+	background: #E6E6FA
 }
 
 .bigbutton {
@@ -30,6 +85,7 @@ table {
 	padding: 5px;
 	margin: 5px;
 	float: left;
+	border-radius: 5px;
 }
 
 .bigbutton a {
@@ -51,6 +107,7 @@ table {
 	display: table;
 	padding: 5px;
 	margin: 5px;
+	border-radius: 3px;
 }
 
 .smallbutton a {
@@ -62,5 +119,5 @@ table {
 	font-stretch: condensed;
 	font-variant: small-caps;
 	text-decoration: none;
-	vertical-align: middle;
+	text-align: center;
 }
