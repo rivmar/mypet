@@ -2,9 +2,10 @@
 
 {% block information %}
 <form action="" method="post">
+	<table class  = 'form'>
     {% csrf_token %}
     {{ form.as_table }}
-    {{ form.form_birth_date }}
+    </table>
     <button type='Submit'>Создать</button>
 </form>
 {% endblock %}

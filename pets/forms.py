@@ -5,10 +5,8 @@ from django.core.exceptions import ValidationError
 from .models import Pets, Events, Species
 import re, datetime
 
-
-
 class PetForm(forms.ModelForm):
-	form_birth_date = forms.CharField (label = 'дата рождения', max_length = 11, 
+	form_birth_date = forms.CharField (label = 'Дата рождения', max_length = 11, 
 		required = False, help_text = '''В формате ГГГГ, ММ.ГГГГ или ДД.ММ.ГГГГ''')
 	pet_name = forms.CharField(label = 'Имя питомца', required = False, help_text = '''Можно оставить поле пустым.
 	 Имя будет сгенерировано из видового названия.''')
@@ -16,6 +14,9 @@ class PetForm(forms.ModelForm):
 		model = Pets
 		fields = ('pet_name', 'species', 'morph', 'gender', 
 			'form_birth_date', 'fed_freq', 'pet_comment')
+		help_texts = {'fed_freq': 'Рекомендуемая частота кормлений. Будет использоваться для напоминаний о кормлении',
+		'pet_comment': "Дополнительная информация, не включенная в другие поля"
+		}
 
 	def clean_form_birth_date(self):
 		inp_data = self.cleaned_data['form_birth_date']
@@ -56,3 +57,6 @@ class EventForm(forms.ModelForm):
 	class Meta(object):
 		model = Events
 		exclude = ('pet',)
+		help_texts = {'event_comment': 'Любые комментарии: тип и количество КО, поведение при кормлении и т.д.', 
+		'reminde_me': 'Заполните это поле, если животное требует дополнительно обратить на себя внимание через\
+		 некоторое время. Формат даты DD.MM.YYY', 'reminder_comment': 'Текст напоминания'}

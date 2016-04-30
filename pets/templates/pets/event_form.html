@@ -3,8 +3,10 @@
 {% block information %}
 <p>Создание/pедактирование события для питомца: {{ pet_name }}{{ object.pet }}<p>
 <form action="" method="post">
+	<table class = 'form'>
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form.as_table }}
+    </table>
     <button type='Submit'>Создать</button>
 </form>
 {% if object %}

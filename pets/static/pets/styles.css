@@ -13,9 +13,12 @@ a {
 	color: #2E8B57;
 }
 
+.form input, select, textarea {
+	margin: 0px 5px 10px; 
+}
 
-.today {
-	background:  #54FF9F ;
+#calendar td.today {
+	background:  #FFFFFF ;
 }
 
 #calendar td.filled {
@@ -64,7 +67,6 @@ a {
 	background: #36648B;
 }
 
-
 .sat, .sun {
 	background:  #B0C4DE
 }
@@ -73,8 +75,19 @@ a {
 	background: #F0F8FF
 }
 
-.thu, .tue{
+.thu, .tue {
 	background: #E6E6FA
+}
+
+.form th, td {
+	vertical-align: top;
+	padding-bottom: 20px;
+}
+
+.helptext {
+	font-size: 12pt;
+	color:  #708090 ;
+	font-style: italic
 }
 
 .bigbutton {
