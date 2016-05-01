@@ -8,6 +8,7 @@
 Напомнить: {{ event.reminde_me|default:'не указано.' }}<p>
 Комментарий к напоминанию: {{ event.reminder_comment|default:'не добавлен.' }}<p>
 <b>{{ event.pet.u_name }}</b><p>
+<div clss="clear"></div>
 <div class = 'bigbutton'><a href="{% url 'pets:changeevent' event.id %}">Редактировать</a></div>
 <div class = 'bigbutton'><a href="{% url 'pets:petdetail' event.pet.id %}">Назад к питомцу</a></div>
 <div class = 'bigbutton'><a href="{% url 'pets:petevents' event.pet.id %}">Назад к списку событий</a></div>

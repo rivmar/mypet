@@ -15,8 +15,8 @@
 {% endif %}
 <p>
 {{ pet.pet_comment }}<p>
-
+<div style="clear:both; height: 50px;"></div>
 <div class = 'bigbutton'><a href="{% url 'pets:changepet' pet.id %}">Редактировать</a></div>
-<div class = 'bigbutton'><a href="{% url 'pets:addevent' pet.id %}">Добавить событие</a></div><p>
-<div class = 'bigbutton'><a href="{% url 'pets:petevents' pet.id %}">Посмотреть прошлые события</a></div><p>
+<div class = 'bigbutton'><a href="{% url 'pets:addevent' pet.id %}">Добавить событие</a></div>
+<div class = 'bigbutton'><a href="{% url 'pets:petevents' pet.id %}">Посмотреть прошлые события</a></div>
 {% endblock %}

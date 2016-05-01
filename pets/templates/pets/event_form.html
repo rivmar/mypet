@@ -9,6 +9,7 @@
     </table>
     <button type='Submit'>Создать</button>
 </form>
+<div clss="clear"></div>
 {% if object %}
 <div class = 'bigbutton'><a href="{% url 'pets:petdetail' object.pet.id %}">Вернуться к питомцу {{ object.pet }}</a></div>
 {% endif %}

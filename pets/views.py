@@ -17,6 +17,9 @@ from django.utils.html import conditional_escape as esc
 from pets.forms import PetForm, EventForm, AddSpeciesForm
 from .models import Events, Pets
 
+class AuthMixin():
+	pass
+
 class PetsList(generic.ListView):
 	model = Pets
 	template_name = 'pets/petlist.html'

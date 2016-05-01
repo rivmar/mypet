@@ -5,12 +5,18 @@ body {
 
 h1 {
 	font-size: 18pt;
+	font-weight: normal;
 	text-decoration: none;
 }
 
 a {
 	text-decoration: none;
 	color: #2E8B57;
+}
+
+.clear {
+	clear: both;
+	height: 50px;
 }
 
 .form input, select, textarea {
@@ -79,7 +85,7 @@ a {
 	background: #E6E6FA
 }
 
-.form th, td {
+.form th, .form  td {
 	vertical-align: top;
 	padding-bottom: 20px;
 }
@@ -105,11 +111,8 @@ a {
 	color: #FFFFFF;
 	display: table-cell;
 	font-size: 16pt;
-	font-family: Tahoma;
-	font-style: normal;
 	font-stretch: condensed;
 	font-variant: small-caps;
-	text-decoration: none;
 	vertical-align: middle;
 }
 
@@ -127,10 +130,8 @@ a {
 	color: #FFFFFF;
 	display: table-cell;
 	font-size: 12pt;
-	font-family: Tahoma;
-	font-style: normal;
 	font-stretch: condensed;
 	font-variant: small-caps;
-	text-decoration: none;
 	text-align: center;
+	vertical-align: middle;
 }

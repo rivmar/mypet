@@ -1,0 +1,10 @@
+{% extends 'pets/main.html' %}
+ {% block login %}
+ <form action='/auth/register/' method = 'POST'>
+ 	{% csrf_token %}
+ 	<table class = 'form'>
+ 	{{ form.as_table }}
+ 	</table>
+ 	<input class='button' type = 'submit' value='Зарегистрироваться'>
+ </form>
+ {%endblock%}

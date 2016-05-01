@@ -1,9 +1,10 @@
 {% load staticfiles %}
 <html><head>
-<title>Main page!!!</title>
+<title>MyPet - календарь террариумиста</title>
 <link rel='stylesheet' type='text/css' href = '{% static 'pets/styles.css' %}'
 </head>
 <body>
+<h1>Добро пожаловать!</h1>
 <a href="{% url 'pets:calendar' %}">Main template!</a>
 {% block login %}{% endblock %}
 {% block information %}{% endblock %}

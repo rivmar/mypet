@@ -13,6 +13,7 @@
 <td><div class = 'smallbutton'><a href="{% url 'pets:deleteevent' event.id %}">Удалить событие</a></div></td>
 {% endfor %}
 </table>
+<div style="clear:both; height: 50px;"></div>
 <div class = 'bigbutton'><a href="{% url 'pets:addevent' petid %}">Добавить событие</a></div>
 <div class = 'bigbutton'><a href="{% url 'pets:petdetail' petid %}">Назад к питомцу</a></div>
 {% endblock %}

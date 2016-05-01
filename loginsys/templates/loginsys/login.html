@@ -4,12 +4,14 @@
 <form action = '' method = 'post'>
 	{% csrf_token %}
 	<label for='username'>Имя пользователя</label>
-	<input type='text' name='username' id='username'>	
+	<input type='text' name='username' id='username'><p>
 	<label for='password'>Пароль</label>
-	<input type='password' name='password' id='password'>
+	<input type='password' name='password' id='password'><p>
 	{% if login_error %}
 	<label class='error'>{{ login_error }}</label>
 	{% endif %}
-	<input class='button' type='submit' value='Войти'>
+	<input class='button' type='submit' value='Войти'><p>
+	<a href='/auth/register/'>Зарегистрироваться</a>
 </form>
+<div class="clear"></div>
 {% endblock %}
