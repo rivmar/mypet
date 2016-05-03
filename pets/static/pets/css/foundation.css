@@ -1792,6 +1792,7 @@ select {
 .callout {
   margin: 0 0 1rem 0;
   padding: 1rem;
+  width: 1000px;
   border: 1px solid rgba(10, 10, 10, 0.25);
   border-radius: 0;
   position: relative;

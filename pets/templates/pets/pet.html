@@ -2,7 +2,7 @@
 
 {% block information %}
 <hr>
-<h3>Вы смотрите карточку питомца: {{ pet.pet_name }}</h1><p>
+<h4>Вы смотрите карточку питомца: {{ pet.pet_name }}</h1><p>
 <b>Пол:</b> {{ pet.get_gender_display }}<p>
 <b>Вид:</b> {{ pet.species }}<p>
 <b>Морфа:</b> {{ pet.morph|default:"не указана" }}<p>
@@ -17,6 +17,10 @@
 <hr>
 <div style="clear:both; height: 50px;"></div>
 <a href="{% url 'pets:changepet' pet.id %}" class="success button">Редактировать</a>
+{% if pet.is_dead = False %}
 <a href="{% url 'pets:addevent' pet.id %}" class="success button">Добавить событие</a>
+{% else %}
+<div class="secondary button">Добавить событие</div>
+{% endif %}
 <a href="{% url 'pets:petevents' pet.id %}" class="success button">Посмотреть прошлые события</a>
 {% endblock %}

@@ -28,7 +28,7 @@ class Pets(models.Model):
 		('1', 'Самец'),
 		('2', 'Самка'))
 	u_name = models.ForeignKey(User)
-	pet_name = models.CharField('Имя питомца', max_length=20)
+	pet_name = models.CharField('Имя питомца', max_length=50)
 	species = models.ForeignKey(Species, on_delete=models.DO_NOTHING, 
 		 verbose_name = 'Вид животного', related_name = 'keepers')
 	morph = models.CharField('Морфа',max_length=50, blank = True)
@@ -38,7 +38,7 @@ class Pets(models.Model):
 	birth_year = models.IntegerField('Год рождения',blank = True, null = True)
 	fed_freq = models.IntegerField('Частота кормления', blank = True, null = True)
 	pet_comment = models.TextField('Комментарий',blank = True)
-	is_dead = models.BooleanField(default = False, editable = False)
+	is_dead = models.BooleanField(default = False) #, editable = False)
 
 	def __str__(self):
 		return self.pet_name

@@ -1,7 +1,6 @@
-{% extends 'pets/main.html' %} 
-
-{% block login %}
-<form action = '' method = 'post'>
+{% extends 'loginsys/main.html' %}
+ {% block login %}
+<form action = '' method = 'post' class = 'form'>
 	{% csrf_token %}
 	<label for='username'>Имя пользователя</label>
 	<input type='text' name='username' id='username'><p>
@@ -10,7 +9,7 @@
 	{% if login_error %}
 	<label class='error'>{{ login_error }}</label>
 	{% endif %}
-	<input class="success hollow button" type='submit' value='Войти'><p>
+	<input class="success hollow button" type='submit' value='Войти'>
 	<a href='/auth/register/' class="secondary button">Зарегистрироваться</a>
 </form>
 <div class="clear"></div>

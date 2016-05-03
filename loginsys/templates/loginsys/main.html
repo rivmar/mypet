@@ -8,11 +8,13 @@
     <link rel="stylesheet" href='{% static 'pets/css/foundation.css' %}'>
     <title>MyPet - календарь террариумиста</title>
     <link rel="shortcut icon" type="image/png" href='{% static "images/favicon.ico" %}'/>
- </head>
-<body>
-<h5>Добро пожаловать, {{ user }}!</h1>
-<a href="{% url 'pets:calendar' %}" class="button">Мой календарь</a><br/>
-{% block information %}{% endblock %}
-<a href="{% url 'pets:petlist' %}" class="success button">К списку питомцев</a>
-</body>
+ </head> 
+ <body>
+ 	<div class="callout primary">
+<h4>Для пользования системой необходима авторизация.</h4>
+Если вы хотите просто посмотреть, что умеет система, вы можете использовать 
+пользователя test с паролем test.
+	</div>
+  {% block login %} {%endblock%}
+  </body>
 </html>

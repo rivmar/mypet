@@ -2,7 +2,7 @@
 
 {% block information %}
 <hr>
-<h3>Питомец: {{ event.pet }}</h1><p>
+<h4>Питомец: {{ event.pet }}</h1><p>
 Событие: {{ event.get_event_type_display }}<p>
 Дата: {{ event.event_date }}<p>
 Комментарий: {{ event.event_comment|default:'не добавлен.' }}<p>

@@ -70,10 +70,14 @@
 	padding-bottom: 20px;
 }
 
+.form {
+	width: 1000px;
+}
+
 .helptext {
 	font-size: 12pt;
 	color:  #708090 ;
-	font-style: italic
+	font-style: italic;
 }
 
 .event {

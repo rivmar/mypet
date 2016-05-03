@@ -28,6 +28,10 @@
 </div></div>
 <hr>
 <div style="clear:both; height: 50px;"></div>
-<a href="{% url 'pets:addevent' petid %}" class="success button">Добавить событие</a>
+{% if pet.is_dead = False %}
+<a href="{% url 'pets:addevent' pet.id %}" class="success button">Добавить событие</a>
+{% else %}
+<div class="secondary button">Добавить событие</div>
+{% endif %}
 <a href="{% url 'pets:petdetail' petid %}" class="success button">Назад к питомцу</a>
 {% endblock %}

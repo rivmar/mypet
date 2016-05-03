@@ -50,7 +50,13 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'mr.mdlw.CheckUser'
 )
+
+LOGIN_URLS = (
+    r'^/auth/register/$',
+    r'^/auth/login/$',
+    )
 
 MEDIA_ROOT = '/static/images/'
 

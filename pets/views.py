@@ -1,7 +1,5 @@
 from django.shortcuts import render, redirect, render_to_response
 from django.utils.safestring import mark_safe
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 from django.views import generic
 from django.contrib import auth
 from django.core.exceptions import PermissionDenied
@@ -17,17 +15,10 @@ from django.utils.html import conditional_escape as esc
 from pets.forms import PetForm, EventForm, AddSpeciesForm
 from .models import Events, Pets
 
-class AuthMixin():
-	pass
-
 class PetsList(generic.ListView):
 	model = Pets
 	template_name = 'pets/petlist.html'
 	context_object_name = 'pets'
-
-	@method_decorator(login_required())
-	def dispatch(self, request, *args, **kwargs):
-		return super(PetsList, self).dispatch(request, *args, **kwargs)
 
 	def get_queryset(self):
 		pets = Pets.objects.filter(u_name=self.request.user)
@@ -40,7 +31,7 @@ class PetDetailView(generic.DetailView):
 
 	def get_object(self):
 		object = super(PetDetailView, self).get_object()
-		if self.request.user == object.u_name and self.request.user.is_authenticated():
+		if self.request.user == object.u_name:
 			return object
 		else:
 			raise PermissionDenied
@@ -85,7 +76,7 @@ class PetUpdate(generic.edit.UpdateView):
 
 	def get_object(self):
 		object = super(PetUpdate, self).get_object()
-		if self.request.user == object.u_name and self.request.user.is_authenticated():
+		if self.request.user == object.u_name:
 			return object
 		else:
 			raise PermissionDenied
@@ -141,7 +132,7 @@ class EventAdd(generic.edit.CreateView):
 
 	def get_object(self):
 		object = super(EventAdd, self).get_object()
-		if self.request.user == object.pet.u_name and self.request.user.is_authenticated():
+		if self.request.user == object.pet.u_name:
 			return object
 		else:
 			raise PermissionDenied
@@ -151,6 +142,10 @@ class EventAdd(generic.edit.CreateView):
 		instance.pet = Pets.objects.get(id = self.kwargs['pk'])
 		instance.save()
 		self.object = instance
+		if self.object.event_type == 'D':
+			pet = self.object.pet
+			pet.is_dead = True
+			pet.save()
 		return redirect(self.get_success_url())
 
 class  EventDetail(generic.DetailView):
@@ -160,7 +155,7 @@ class  EventDetail(generic.DetailView):
 
 	def get_object(self):
 		object = super(EventDetail, self).get_object()
-		if self.request.user == object.pet.u_name and self.request.user.is_authenticated():
+		if self.request.user == object.pet.u_name:
 			return object
 		else:
 			raise PermissionDenied
@@ -172,7 +167,7 @@ class EventUpdate(generic.edit.UpdateView):
 
 	def get_object(self):
 		object = super(EventUpdate, self).get_object()
-		if self.request.user == object.pet.u_name and self.request.user.is_authenticated():
+		if self.request.user == object.pet.u_name:
 			return object
 		else:
 			raise PermissionDenied
@@ -187,14 +182,17 @@ class EventDelete(generic.edit.DeleteView):
 	model = Events
 	template_name = 'pets/delete_event.html'
 
+	def get_object(self):
+		object = super(EventDelete, self).get_object()
+		if self.request.user == object.pet.u_name:
+			return object
+		else:
+			raise PermissionDenied
+
 	def get_success_url(self):
 		eventid = self.kwargs['pk']
 		pet = Events.objects.get(pk = eventid).pet
 		return '%s/petevents' % pet.get_absolute_url()
-
-	@method_decorator(login_required())
-	def dispatch(self, request, *args, **kwargs):
-		return super(EventDelete, self).dispatch(request, *args, **kwargs)
 
 class EventsCalendar(HTMLCalendar):
     '''
@@ -275,7 +273,7 @@ def calendar(request, year=datetime.date.today().year, month=datetime.date.today
   )
   cal = EventsCalendar(my_events).formatmonth(year, month)
   flnm = find_last_next_month(year, month)
-  flnm.update({'calendar': mark_safe(cal),'month': '{:02}'.format(month), 'year': year})
+  flnm.update({'calendar': mark_safe(cal),'month': '{:02}'.format(month), 'year': year, 'user': request.user})
   return render_to_response('pets/cal_template.html', flnm)
 
 class PetEventsView(generic.ListView):
@@ -283,9 +281,13 @@ class PetEventsView(generic.ListView):
 	template_name = 'pets/petevents.html'
 	context_object_name = 'events'
 
-	@method_decorator(login_required())
-	def dispatch(self, request, *args, **kwargs):
-		return super(PetEventsView, self).dispatch(request, *args, **kwargs)
+	def get_object(self):
+		object = super(PetEventsView, self).get_object()
+		if object is True:
+			if self.request.user == object[0].pet.u_name:
+				return object
+			else:
+				raise PermissionDenied
 
 	def get_context_data(self, **kwargs):
 		context = super(PetEventsView, self).get_context_data(**kwargs)
@@ -301,10 +303,6 @@ class CalendarDay(generic.ListView):
 	model = Events
 	template_name = 'pets/calendarday.html'
 	context_object_name = 'events'
-
-	@method_decorator(login_required())
-	def dispatch(self, request, *args, **kwargs):
-		return super(CalendarDay, self).dispatch(request, *args, **kwargs)
 
 	def get_queryset(self):
 		day, month, year = map(int, (self.kwargs['day'], self.kwargs['month'], self.kwargs['year']))

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.shortcuts import render_to_response, redirect
 from django.contrib import auth
-from django.contrib.auth.forms import UserCreationForm
+from loginsys.forms import UserCreateForm
 from django.core.context_processors import csrf
 
 def logout(request):
@@ -27,7 +27,7 @@ def login(request):
 def register(request):
 	args = {}
 	args.update(csrf(request))
-	args['form'] = UserCreationForm()
+	args['form'] = UserCreateForm()
 	if request.POST:
 		newuser_form = UserCreationForm(request.POST)
 		if newuser_form.is_valid():

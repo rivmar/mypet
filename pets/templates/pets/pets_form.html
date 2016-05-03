@@ -1,6 +1,7 @@
 {% extends 'pets/main.html' %}
 
 {% block information %}
+<h4>Создание/редактирование питомца {{ object.pet_name }}</h4>
 <p><a href="{% url 'pets:newspecies' %}"class="success hollow button">Новый вид</a><span class="helptext"> Добавить вид, которого нет в выпадающем списке. Введенные ранее в форму данные будут утеряны!</span>
 <p>
 <form action="" method="post">
@@ -12,6 +13,6 @@
     </form>
  <div class="clear"></div>
 {% if object %}
-<a href="{% url 'pets:petdetail' object.id %}" class="success button">Вернуться к питомцу {{object.pet_name}}</a>
+<a href="{% url 'pets:petdetail' object.id %}" class="success button">Вернуться к питомцу {{ object.pet_name }}</a>
 {% endif %}
 {% endblock %}

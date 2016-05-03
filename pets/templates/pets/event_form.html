@@ -1,7 +1,7 @@
 {% extends 'pets/main.html' %}
 
 {% block information %}
-<p>Создание/pедактирование события для питомца: {{ pet_name }}{{ object.pet }}<p>
+<h4>Создание/pедактирование события для питомца: {{ pet_name }}{{ object.pet }}</h4>
 <form action="" method="post">
 	<table class = 'form'>
     {% csrf_token %}
