@@ -1,16 +1,17 @@
 {% extends 'pets/main.html' %} 
 
 {% block information %}
-<h1>Питомец: {{ event.pet }}</h1><p>
+<hr>
+<h3>Питомец: {{ event.pet }}</h1><p>
 Событие: {{ event.get_event_type_display }}<p>
 Дата: {{ event.event_date }}<p>
 Комментарий: {{ event.event_comment|default:'не добавлен.' }}<p>
 Напомнить: {{ event.reminde_me|default:'не указано.' }}<p>
 Комментарий к напоминанию: {{ event.reminder_comment|default:'не добавлен.' }}<p>
-<b>{{ event.pet.u_name }}</b><p>
-<div clss="clear"></div>
-<div class = 'bigbutton'><a href="{% url 'pets:changeevent' event.id %}">Редактировать</a></div>
-<div class = 'bigbutton'><a href="{% url 'pets:petdetail' event.pet.id %}">Назад к питомцу</a></div>
-<div class = 'bigbutton'><a href="{% url 'pets:petevents' event.pet.id %}">Назад к списку событий</a></div>
+<hr>
+<div class="clear"></div>
+<a href="{% url 'pets:changeevent' event.id %}" class="success button">Редактировать</a>
+<a href="{% url 'pets:petdetail' event.pet.id %}" class="success button">Назад к питомцу</a>
+<a href="{% url 'pets:petevents' event.pet.id %}" class="success button">Назад к списку событий</a>
 
 {% endblock %}

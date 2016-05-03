@@ -1,14 +1,31 @@
 {% extends 'pets/main.html' %} 
 
 {% block information %}
-<h1>One day!!!{{data}}</h1>
-<table>
+<hr>
+<div class="row">
+  <div class="small-9 columns small-centered">
 {% for event in events %}
-<tr>
+<article class="event">
+        <div class="event-date">
+          <p class="event-month">{{ event.event_date|date:"d" }}</p>
+          <p class="event-day">{{ event.event_date|date:"b" }}</p>
+        </div>
+
+        <div class="event-desc">
+          <h4 class="event-desc-header">{{event.pet}}</h4>
+          <p class="event-desc-detail"><span class="event-desc-time"></span>{{ event.get_event_type_display }}</p>
+          <a href="{% url 'pets:viewevent' event.id %}" class = 'success hollow button'>Просмотреть событие</a>
+          <a href="{% url 'pets:deleteevent' event.id %}" class="secondary hollow button">Удалить событие</a>
+        </div>
+      </article>
+      <hr>
+
+<!--tr>
 <td><a href="{% url 'pets:viewevent' event.id %}">{{event.pet}} {{ event.get_event_type_display }}</a></td>
 <td><div class = 'smallbutton'><a href="{% url 'pets:deleteevent' event.id %}">Удалить событие.</a></td>
-</tr>
+</tr-->
 {% endfor %}
-</table>
+</div></div>
+<hr>
 {% endblock %}
 <div clss="clear"></div>

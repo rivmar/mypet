@@ -1,17 +1,17 @@
 {% extends 'pets/main.html' %}
 
 {% block information %}
-<p><div class = 'smallbutton'><a href="{% url 'pets:newspecies' %}">Новый вид</a></div><span class="helptext"> Добавить вид, которого нет в выпадающем списке. Введенные ранее в форму данные будут утеряны!</span>
+<p><a href="{% url 'pets:newspecies' %}"class="success hollow button">Новый вид</a><span class="helptext"> Добавить вид, которого нет в выпадающем списке. Введенные ранее в форму данные будут утеряны!</span>
 <p>
 <form action="" method="post">
 	<table class = 'form'>
     {% csrf_token %}
     {{ form.as_table }}
     </table>
-    <button type='Submit'>Создать</button>
+    <button type='Submit' class="success hollow button">Создать</button>
     </form>
  <div class="clear"></div>
 {% if object %}
-<div class = 'bigbutton'><a href="{% url 'pets:petdetail' object.id %}">Вернуться к питомцу {{object.pet_name}}</a></div>
+<a href="{% url 'pets:petdetail' object.id %}" class="success button">Вернуться к питомцу {{object.pet_name}}</a>
 {% endif %}
 {% endblock %}

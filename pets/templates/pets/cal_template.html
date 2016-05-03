@@ -1,6 +1,7 @@
 {% extends 'pets/main.html' %} 
 {% load static %}
 {% block information %}
+<hr>
 <div id="calendar">
     {{ calendar }}
 </div>
@@ -16,5 +17,10 @@
 <img src="{% static 'images/bl.png' %}" /> - смерть<br>
 <img src="{% static 'images/gr.png' %}" /> - другое<br>
 </div><p>
+<div class="clear"></div>
+<a href = '{% url 'pets:calendar' pyear pmonth %}'><<Раньше<<</a>
+<a href = '{% url 'pets:calendar' %}'>  Текущий месяц  </a>
+<a href = '{% url 'pets:calendar' nyear nmonth %}'>>>Позже>></a>
+<hr>
 <div class="clear"></div>
 {% endblock %}

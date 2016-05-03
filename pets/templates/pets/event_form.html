@@ -7,13 +7,13 @@
     {% csrf_token %}
     {{ form.as_table }}
     </table>
-    <button type='Submit'>Создать</button>
+    <button type='Submit' class="success hollow button">Создать</button>
 </form>
 <div clss="clear"></div>
 {% if object %}
-<div class = 'bigbutton'><a href="{% url 'pets:petdetail' object.pet.id %}">Вернуться к питомцу {{ object.pet }}</a></div>
+<a href="{% url 'pets:petdetail' object.pet.id %}" class="success button">Вернуться к питомцу {{ object.pet }}</a>
 {% endif %}
 {% if pet_name %}
-<div class = 'bigbutton'><a href="{% url 'pets:petdetail' pet_name.id %}">Вернуться к питомцу {{ pet_name }}</a></div>
+<a href="{% url 'pets:petdetail' pet_name.id %}" class="success button">Вернуться к питомцу {{ pet_name }}</a>
 {% endif %}
 {% endblock %}

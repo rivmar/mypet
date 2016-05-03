@@ -260,11 +260,23 @@ class EventsCalendar(HTMLCalendar):
         return '<td class="%s">%s</td>' % (cssclass, body)
 
 def calendar(request, year=datetime.date.today().year, month=datetime.date.today().month):
+  month = int(month)
+  year = int(year)
+  def find_last_next_month(year, month):
+  	cur_date = datetime.date(year, month, 15)
+  	step = datetime.timedelta(days=30)
+  	next, prev = cur_date + step, cur_date - step
+  	nmonth, nyear = '{:02}'.format(next.month), next.year
+  	pmonth, pyear = '{:02}'.format(prev.month), prev.year
+  	res = {'nmonth': nmonth, 'nyear': nyear, 'pmonth': pmonth, 'pyear': pyear}
+  	return res 
   my_events = Events.objects.order_by('event_date').filter(
     event_date__year=year, event_date__month=month, pet__u_name=request.user
   )
   cal = EventsCalendar(my_events).formatmonth(year, month)
-  return render_to_response('pets/cal_template.html', {'calendar': mark_safe(cal),})
+  flnm = find_last_next_month(year, month)
+  flnm.update({'calendar': mark_safe(cal),'month': '{:02}'.format(month), 'year': year})
+  return render_to_response('pets/cal_template.html', flnm)
 
 class PetEventsView(generic.ListView):
 	model = Events

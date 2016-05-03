@@ -1,22 +1,22 @@
 {% extends 'pets/main.html' %} 
 
 {% block information %}
-<p>Hello there, {{ pet.u_name }}!</p>
-<h1>Вы смотрите карточку питомца: {{ pet.pet_name }}</h1><p>
-Пол: {{ pet.get_gender_display }}<p>
-Вид: {{ pet.species }}<p>
-Морфа: {{ pet.morph|default:"не указана" }}
-<p>
-Дата рождения: {{ pet.temp_birth_date|default:"неизвестна" }}<p>
-Рекомендуемая частота кормления: {% if pet.fed_freq %}
+<hr>
+<h3>Вы смотрите карточку питомца: {{ pet.pet_name }}</h1><p>
+<b>Пол:</b> {{ pet.get_gender_display }}<p>
+<b>Вид:</b> {{ pet.species }}<p>
+<b>Морфа:</b> {{ pet.morph|default:"не указана" }}<p>
+<b>Дата рождения:</b> {{ pet.temp_birth_date|default:"неизвестна" }}<p>
+<b>Рекомендуемая частота кормления:</b> {% if pet.fed_freq %}
 раз в {{ pet.fed_freq }} дней
 {% else %}
 не указана
 {% endif %}
 <p>
 {{ pet.pet_comment }}<p>
+<hr>
 <div style="clear:both; height: 50px;"></div>
-<div class = 'bigbutton'><a href="{% url 'pets:changepet' pet.id %}">Редактировать</a></div>
-<div class = 'bigbutton'><a href="{% url 'pets:addevent' pet.id %}">Добавить событие</a></div>
-<div class = 'bigbutton'><a href="{% url 'pets:petevents' pet.id %}">Посмотреть прошлые события</a></div>
+<a href="{% url 'pets:changepet' pet.id %}" class="success button">Редактировать</a>
+<a href="{% url 'pets:addevent' pet.id %}" class="success button">Добавить событие</a>
+<a href="{% url 'pets:petevents' pet.id %}" class="success button">Посмотреть прошлые события</a>
 {% endblock %}

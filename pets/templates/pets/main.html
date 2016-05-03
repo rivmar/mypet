@@ -1,13 +1,19 @@
 {% load staticfiles %}
-<html><head>
-<title>MyPet - календарь террариумиста</title>
-<link rel='stylesheet' type='text/css' href = '{% static 'pets/styles.css' %}'
-</head>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' type='text/css' href = '{% static 'pets/styles.css' %}'>
+    <link rel="stylesheet" href='{% static 'pets/css/foundation.css' %}'>
+    <title>MyPet - календарь террариумиста</title>
+    <link rel="shortcut icon" type="image/png" href='{% static "images/favicon.ico" %}'/>
+ </head>
 <body>
-<h1>Добро пожаловать!</h1>
-<a href="{% url 'pets:calendar' %}">Main template!</a>
+<h6>Добро пожаловать!</h1>
+<a href="{% url 'pets:calendar' %}" class="button">Мой календарь</a><br/>
 {% block login %}{% endblock %}
 {% block information %}{% endblock %}
-<div class = 'bigbutton'><a href="{% url 'pets:petlist' %}">К списку питомцев</a></div>
+<a href="{% url 'pets:petlist' %}" class="success button">К списку питомцев</a>
 </body>
 </html>

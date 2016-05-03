@@ -22,7 +22,8 @@ html {
    * Remove default margin.
    */
 body {
-  margin: 0; }
+  margin: 0; 
+}
 
 /* HTML5 display definitions
      ========================================================================== */
@@ -354,11 +355,14 @@ optgroup {
    */
 table {
   border-collapse: collapse;
-  border-spacing: 0; }
+  border-spacing: 0; 
+}
 
 td,
 th {
-  padding: 0; }
+  padding: 0; 
+  vertical-align: middle;
+  }
 
 .foundation-mq {
   font-family: "small=0em&medium=40em&large=64em&xlarge=75em&xxlarge=90em"; }
@@ -373,7 +377,7 @@ html {
   box-sizing: inherit; }
 
 body {
-  padding: 0;
+  padding: 20;
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
   font-weight: normal;
@@ -525,17 +529,17 @@ h6 {
     font-size: 1rem; } }
 
 a {
-  color: #2199e8;
+  color: #2E8B57; /*#2199e8;*/
   text-decoration: none;
   line-height: inherit;
   cursor: pointer; }
   a:hover, a:focus {
-    color: #1585cf; }
+    color:  #3adb76;}
   a img {
     border: 0; }
 
 hr {
-  max-width: 75rem;
+  max-width: 100rem;
   height: 0;
   border-right: 0;
   border-top: 0;

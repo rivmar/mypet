@@ -1,19 +1,33 @@
 {% extends 'pets/main.html' %} 
 
 {% block information %}
-<h1>Вы смотрите историю событий для питомца: {{ petname }}</h1>
-<table>
+<h4>Вы смотрите историю событий для питомца: {{ petname }}</h1>
+<hr>
+<div class="row">
+  <div class="small-9 columns small-centered">
 {% if not events %}
 Вы не добавили ни одного события для этого питомца.
 {% endif %}
 {% for event in events %}
-<tr><td>
-<a href="{% url 'pets:viewevent' event.id %}">{{ event.event_date }} - {{ event.get_event_type_display }}</a></td>
-<td>{{ event.event_comment }}</td>
-<td><div class = 'smallbutton'><a href="{% url 'pets:deleteevent' event.id %}">Удалить событие</a></div></td>
+    <article class="event">
+
+        <div class="event-date">
+          <p class="event-month">{{ event.event_date|date:"d" }}</p>
+          <p class="event-day">{{ event.event_date|date:"b" }}</p>
+        </div>
+
+        <div class="event-desc">
+          <h4 class="event-desc-header">{{ event.get_event_type_display }}</h4>
+          <p class="event-desc-detail"><span class="event-desc-time"></span>{{ event.event_comment }}</p>
+          <a href="{% url 'pets:viewevent' event.id %}" class = 'success hollow button'>Просмотреть событие</a>
+          <a href="{% url 'pets:deleteevent' event.id %}" class="secondary hollow button">Удалить событие</a>
+        </div>
+      </article>
+      <hr>
 {% endfor %}
-</table>
+</div></div>
+<hr>
 <div style="clear:both; height: 50px;"></div>
-<div class = 'bigbutton'><a href="{% url 'pets:addevent' petid %}">Добавить событие</a></div>
-<div class = 'bigbutton'><a href="{% url 'pets:petdetail' petid %}">Назад к питомцу</a></div>
+<a href="{% url 'pets:addevent' petid %}" class="success button">Добавить событие</a>
+<a href="{% url 'pets:petdetail' petid %}" class="success button">Назад к питомцу</a>
 {% endblock %}
