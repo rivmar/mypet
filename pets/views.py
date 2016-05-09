@@ -15,77 +15,16 @@ from django.utils.html import conditional_escape as esc
 from pets.forms import PetForm, EventForm, AddSpeciesForm
 from .models import Events, Pets
 
-class PetsList(generic.ListView):
-	model = Pets
-	template_name = 'pets/petlist.html'
-	context_object_name = 'pets'
-
-	def get_queryset(self):
-		pets = Pets.objects.filter(u_name=self.request.user)
-		return pets
-
-class PetDetailView(generic.DetailView):
-	model = Pets
-	context_object_name = 'pet'
-	template_name = 'pets/pet.html'
-
+class GetObjectMixin():
 	def get_object(self):
-		object = super(PetDetailView, self).get_object()
+		object = super().get_object()
 		if self.request.user == object.u_name:
 			return object
 		else:
 			raise PermissionDenied
 
-class PetAdd(generic.edit.CreateView):
-	form_class = PetForm
-	template_name = 'pets/pets_form.html'
-
-	def form_valid(self, form):
-		birth_date_ff = form.cleaned_data['form_birth_date']
-		if birth_date_ff:
-			birth_date_ff = birth_date_ff.split('.')[::-1]
-		else:
-			birth_date_ff = []
-		instance = form.save(commit=False)
-		instance.u_name = self.request.user
-		a = instance.pet_name
-		data = []
-		for k in range(3):
-			try:
-				data.append(birth_date_ff.pop(0))
-			except IndexError:
-				data.append(None)
-		instance.birth_year, instance.birth_month, instance.birth_date = data
-		if not instance.pet_name:
-			psn = instance.species.__str__()
-			uniq, i = False, 0
-			while uniq == False:
-				i+=1
-				pr_pet_name = '%s %s' % (psn, i)
-				if not Pets.objects.filter(u_name=self.request.user, pet_name=pr_pet_name).exists():
-					instance.pet_name = pr_pet_name
-					uniq = True
-		instance.save()
-		self.object = instance
-		return redirect(self.get_success_url())
-
-class PetUpdate(generic.edit.UpdateView):
-	form_class = PetForm
-	template_name = 'pets/pets_form.html'
-	model = Pets
-
-	def get_object(self):
-		object = super(PetUpdate, self).get_object()
-		if self.request.user == object.u_name:
-			return object
-		else:
-			raise PermissionDenied
-
-	def get_initial(self):
-		initial = super(PetUpdate, self).get_initial()
-		initial['form_birth_date'] = self.object.form_birth_date
-		return initial
-
+class PetFormMixin():
+	'''Form validation at pet creation/update'''
 	def form_valid(self, form):
 		birth_date_ff = form.cleaned_data['form_birth_date']
 		if birth_date_ff:
@@ -94,6 +33,7 @@ class PetUpdate(generic.edit.UpdateView):
 			birth_date_ff = []
 		pet_name_ff = form.cleaned_data['pet_name']
 		instance = form.save(commit=False)
+		instance.u_name = self.request.user
 		data = []
 		for k in range(3):
 			try:
@@ -114,7 +54,35 @@ class PetUpdate(generic.edit.UpdateView):
 		self.object = instance
 		return redirect(self.get_success_url())
 
-class EventAdd(generic.edit.CreateView):
+class PetsList(generic.ListView):
+	model = Pets
+	template_name = 'pets/petlist.html'
+	context_object_name = 'pets'
+
+	def get_queryset(self):
+		pets = Pets.objects.filter(u_name=self.request.user)
+		return pets
+
+class PetDetailView(GetObjectMixin, generic.DetailView):
+	model = Pets
+	context_object_name = 'pet'
+	template_name = 'pets/pet.html'
+
+class PetAdd(PetFormMixin, generic.edit.CreateView):
+	form_class = PetForm
+	template_name = 'pets/pets_form.html'
+
+class PetUpdate(PetFormMixin, GetObjectMixin, generic.edit.UpdateView):
+	form_class = PetForm
+	template_name = 'pets/pets_form.html'
+	model = Pets
+
+	def get_initial(self):
+		initial = super(PetUpdate, self).get_initial()
+		initial['form_birth_date'] = self.object.form_birth_date
+		return initial
+
+class EventAdd(GetObjectMixin, generic.edit.CreateView):
 	form_class = EventForm
 	model = Events
 	template_name = 'pets/event_form.html'
@@ -130,13 +98,6 @@ class EventAdd(generic.edit.CreateView):
 		context['pet_name'] = pet
 		return context
 
-	def get_object(self):
-		object = super(EventAdd, self).get_object()
-		if self.request.user == object.pet.u_name:
-			return object
-		else:
-			raise PermissionDenied
-
 	def form_valid(self, form):
 		instance = form.save(commit = False)
 		instance.pet = Pets.objects.get(id = self.kwargs['pk'])
@@ -148,46 +109,24 @@ class EventAdd(generic.edit.CreateView):
 			pet.save()
 		return redirect(self.get_success_url())
 
-class  EventDetail(generic.DetailView):
+class  EventDetail(GetObjectMixin,generic.DetailView):
 	model = Events
 	context_object_name = 'event'
 	template_name = 'pets/event.html'
 
-	def get_object(self):
-		object = super(EventDetail, self).get_object()
-		if self.request.user == object.pet.u_name:
-			return object
-		else:
-			raise PermissionDenied
-
-class EventUpdate(generic.edit.UpdateView):
+class EventUpdate(GetObjectMixin, generic.edit.UpdateView):
 	form_class = EventForm
 	model = Events
 	template_name = 'pets/event_form.html'
-
-	def get_object(self):
-		object = super(EventUpdate, self).get_object()
-		if self.request.user == object.pet.u_name:
-			return object
-		else:
-			raise PermissionDenied
 
 	def form_valid(self, form):
 		instance = form.save()
 		self.object = instance
 		return redirect(self.get_success_url())
 
-class EventDelete(generic.edit.DeleteView):
-	
+class EventDelete(GetObjectMixin,generic.edit.DeleteView):	
 	model = Events
 	template_name = 'pets/delete_event.html'
-
-	def get_object(self):
-		object = super(EventDelete, self).get_object()
-		if self.request.user == object.pet.u_name:
-			return object
-		else:
-			raise PermissionDenied
 
 	def get_success_url(self):
 		eventid = self.kwargs['pk']
@@ -196,7 +135,7 @@ class EventDelete(generic.edit.DeleteView):
 
 class EventsCalendar(HTMLCalendar):
     '''
-    http://uggedal.com/journal/creating-a-flexible-monthly-calendar-in-django/
+    link: http://uggedal.com/journal/creating-a-flexible-monthly-calendar-in-django/
     '''
     def __init__(self, events):
         super(EventsCalendar, self).__init__()
@@ -261,6 +200,7 @@ def calendar(request, year=datetime.date.today().year, month=datetime.date.today
   month = int(month)
   year = int(year)
   def find_last_next_month(year, month):
+  	'''Find previous and next month'''
   	cur_date = datetime.date(year, month, 15)
   	step = datetime.timedelta(days=30)
   	next, prev = cur_date + step, cur_date - step
@@ -276,18 +216,10 @@ def calendar(request, year=datetime.date.today().year, month=datetime.date.today
   flnm.update({'calendar': mark_safe(cal),'month': '{:02}'.format(month), 'year': year, 'user': request.user})
   return render_to_response('pets/cal_template.html', flnm)
 
-class PetEventsView(generic.ListView):
+class PetEventsView(GetObjectMixin, generic.ListView):
 	model = Events
 	template_name = 'pets/petevents.html'
 	context_object_name = 'events'
-
-	def get_object(self):
-		object = super(PetEventsView, self).get_object()
-		if object is True:
-			if self.request.user == object[0].pet.u_name:
-				return object
-			else:
-				raise PermissionDenied
 
 	def get_context_data(self, **kwargs):
 		context = super(PetEventsView, self).get_context_data(**kwargs)
