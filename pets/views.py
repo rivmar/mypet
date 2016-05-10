@@ -109,10 +109,17 @@ class EventAdd(GetObjectMixin, generic.edit.CreateView):
 			pet.save()
 		return redirect(self.get_success_url())
 
-class  EventDetail(GetObjectMixin,generic.DetailView):
+class  EventDetail(generic.DetailView):
 	model = Events
 	context_object_name = 'event'
 	template_name = 'pets/event.html'
+
+	def get_object(self):
+		object = super().get_object()
+		if self.request.user == object.pet.u_name:
+			return object
+		else:
+			raise PermissionDenied
 
 class EventUpdate(GetObjectMixin, generic.edit.UpdateView):
 	form_class = EventForm
